@@ -42,6 +42,26 @@ describe('register', () => {
   })
 })
 
+describe('login', () => {
+  before(async () => {
+    await User.deleteMany({})
+    const password = await bcrypt.hash(userinfo.password, config.SALT)
+    await (new User({
+      ...userinfo,
+      password,
+    })).save()
+  })
+
+  test('succeeds with valid user info',
+  async () => {
+    await api
+      .post(config.LOGIN_ROUTE)
+      .send(userinfo)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
