@@ -8,7 +8,6 @@ const User = require('../models/user')
 routerLogin.post('/', async (req, res) => {
   const userinfo = req.body
 
-  console.log(userinfo)
   const user = await User.findOne({
     username: userinfo.username,
   })
@@ -19,15 +18,12 @@ routerLogin.post('/', async (req, res) => {
       error: 'username or password invalid',
     })
   }
-  console.log(verified)
 
   const token = jwt.sign({
     id: user.id,
   }, config.SECRET, {
     expiresIn: 60 * 60 * 24,
   })
-
-  console.log(config.SECRET)
 
   res.json({
     ...user.toJSON(),

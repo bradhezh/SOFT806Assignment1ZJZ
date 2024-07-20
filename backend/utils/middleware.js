@@ -1,11 +1,14 @@
 const path = require('path')
 
+const config = require('../config')
 const logger = require('./logger')
 
 const loggerReq = (req, res, next) => {
   logger.info('method:', req.method)
   logger.info('path:', req.path)
-  logger.info('body:', req.body)
+  if (config.NODE_ENV === config.NODE_ENV_DEV) {
+    logger.info('body:', req.body)
+  }
   logger.info('----')
 
   next()
