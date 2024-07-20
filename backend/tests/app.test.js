@@ -45,7 +45,7 @@ describe('register', () => {
 describe('login', () => {
   before(async () => {
     await User.deleteMany({})
-    password = await bcrypt.hash(userinfo.password, config.SALT)
+    const password = await bcrypt.hash(userinfo.password, config.SALT)
     await (new User({
       ...userinfo,
       password,
@@ -54,7 +54,7 @@ describe('login', () => {
 
   test('succeeds with valid user info',
   async () => {
-    const res = await api
+    await api
       .post(config.LOGIN_ROUTE)
       .send(userinfo)
       .expect(200)
