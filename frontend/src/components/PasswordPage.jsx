@@ -1,5 +1,6 @@
 import {
   useState,
+  useEffect,
 } from 'react'
 import {
   useNavigate,
@@ -11,7 +12,8 @@ import Footer from './Footer'
 import Notification from './Notification'
 import svcUsers from '../services/users'
 
-const SigninPage = () => {
+const PasswordPage = () => {
+  const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [name, setName] = useState('')
   const [password1, setPassword1] = useState('')
@@ -20,7 +22,25 @@ const SigninPage = () => {
   const [notif, setNotif] = useState(null)
   const navigate = useNavigate()
 
-  const signin = async evt => {try {
+  useEffect(() => {(async () => {try {
+    const loggedin = JSON.parse(localStorage.getItem('loggedin'))
+    if (!loggedin) {
+      navigate('/login')
+      return
+    }
+    setUser(loggedin)
+    setUsername(loggedin.username)
+    setName(loggedin.name)
+
+  } catch (err) {
+    setNotif({
+      type: 'error',
+      message: err.response.data?.error || err.message,
+    })
+    setTimeout(() => setNotif(null), 5000)
+  }})()}, [navigate])
+
+  const updateUser = async evt => {try {
     evt.preventDefault()
 
     if (!password1 || password1 !== password2) {
@@ -32,11 +52,11 @@ const SigninPage = () => {
       return
     }
 
-    await svcUsers.signin({
+    await svcUsers.update({
       username,
       name,
       password: password1,
-    })
+    }, user)
 
     navigate('/login')
 
@@ -51,9 +71,9 @@ const SigninPage = () => {
   return (
     <div>
       <Header />
-      <h2>Sign in</h2>
+      <h2>Update user information</h2>
       <Notification notif={notif} />
-      <form onSubmit={signin}>
+      <form onSubmit={updateUser}>
         <input
           placeholder="Username"
           value={username}
@@ -72,6 +92,7 @@ const SigninPage = () => {
           value={password1}
           onChange={evt => setPassword1(evt.target.value)}
         />
+        <br />
         <input
           type="password"
           placeholder="Confirm password"
@@ -80,11 +101,11 @@ const SigninPage = () => {
         />
         <br />
         <br />
-        <button type="submit">Sign in</button>
+        <button type="submit">Update</button>
       </form>
       <Footer />
     </div>
   )
 }
 
-export default SigninPage
+export default PasswordPage
