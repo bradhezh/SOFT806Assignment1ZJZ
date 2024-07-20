@@ -7,6 +7,7 @@ const config = require('./config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
 const routerUsers = require('./controllers/users')
+const routerLogin = require('./controllers/login')
 
 const app = express()
 
@@ -38,6 +39,7 @@ app.get('/version', (req, res) => {
 })
 
 app.use(config.USERS_ROUTE, routerUsers)
+app.use(config.LOGIN_ROUTE, routerLogin)
 
 app.use(middleware.endpointUnknown)
 app.use(middleware.handlerErr)
