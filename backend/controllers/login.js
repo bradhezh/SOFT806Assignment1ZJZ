@@ -27,7 +27,7 @@ routerLogin.post('/', async (req, res) => {
     expiresIn: 60 * 60 * 24,
   })
 
-  console.log(token)
+  console.log(config.SECRET)
 
   res.json({
     ...user.toJSON(),
