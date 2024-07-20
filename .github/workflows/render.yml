@@ -1,0 +1,29 @@
+name: React Express pipeline
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
+jobs:
+  full:
+    name: Full pipeline on Render
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build
+      - name: Test
+        env:
+          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+        run: npm test
+      - name: Trigger deployment on Render
+        if: ${{ github.event_name == 'push' }}
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
