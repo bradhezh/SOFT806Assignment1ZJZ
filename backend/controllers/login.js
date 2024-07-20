@@ -8,6 +8,7 @@ const User = require('../models/user')
 routerLogin.post('/', async (req, res) => {
   const userinfo = req.body
 
+  console.log(userinfo)
   const user = await User.findOne({
     username: userinfo.username,
   })
