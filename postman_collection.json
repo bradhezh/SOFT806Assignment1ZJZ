@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "e6f3ea48-d27c-4543-8b6e-9a91f74150bb",
+		"name": "SOFT806Assignment1ZJZ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "36206544"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"spring\",\n    \"password\": \"123456\",\n    \"name\": \"Spring\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://soft806assignment1zjz.onrender.com/api/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"spring\",\n    \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://soft806assignment1zjz.onrender.com/api/login"
+			},
+			"response": []
+		},
+		{
+			"name": "MainPage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://soft806assignment1zjz.onrender.com/"
+			},
+			"response": []
+		}
+	]
+}
