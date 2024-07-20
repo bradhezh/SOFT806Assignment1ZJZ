@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom'
 
 import './style.css'
-import config from '../../../config'
 
 const UserBar = ({user}) => {
   const navigate = useNavigate()

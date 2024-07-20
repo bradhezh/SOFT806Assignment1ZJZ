@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom'
 
 import './style.css'
-import config from '../../../config'
 import Header from './Header'
 import UserBar from './UserBar'
 import Footer from './Footer'
